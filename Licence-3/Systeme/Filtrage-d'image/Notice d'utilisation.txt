@@ -1,0 +1,34 @@
+======================= 
+NOTICE D'UTILISATION :
+=======================
+1) Lancer le serveur :
+	1.1) Lancez l'exécutable serveur avec la commande ./serveur
+
+2) Une fois le serveur lancé, on peut envoyer des requêtes client :
+	2.1) Lancez l'exécutable client avec la commande ./client <image.bmp> <filtre>
+		avec <image.bmp> le chemin vers l'image à filtrer 
+		et <filtre> le numéro correspondant au filtre souhaité.
+
+3) Stopper le serveur : 
+	3.1) Lancez la commande kill -SIGTERM <pid> (ou kill <pid>) avec <pid> le pid du serveur 
+		(obtenable avec la commande ps -ef | grep serveur).
+
+==============================
+INFORMATIONS SUPPLEMENTAIRES :
+==============================
+1) Pour afficher une aide, lancez la commande ./client -?
+
+2) Pour mettre à jour le serveur après changement du fichier de configuration (serveur/config.conf), 
+	il faut utiliser la commande kill -SIGUSR1 <pid> avec <pi> le pid du serveur.
+
+3) Liste des filtres disponibles avec leurs identifiants: 
+	1  -> grayscale
+	2  -> redscale
+	3  -> greenscale
+	4  -> bluescale
+	5  -> pinkscale
+	6  -> transparency
+	7  -> negate
+	8  -> random
+	
+	
