@@ -1,0 +1,94 @@
+Algorithme de Prim en Langage Algorithmique : 
+
+Structure Point
+	Tableau[1,2] de réels compris entre 0 et 1
+
+Structure Arête
+    Triplet (A, B, poids) avec A et B des entiers et poids un réel
+
+La fonction estDans renvoie vrai si un élément donné en argument est dans la liste donnée en argument
+La procédure AjouterFile ajoute un élément dans une file de priorité
+La fonction Défiler retire et renvoie le premier élément d'une file de priorité
+
+Fonction Algo_Prim(S : Tableau[1..n] d'Entiers, LA : Tableau[1..m] d'Arête, Q : Entier)
+    var ACM : Tableau[1..] d'arêtes, T : Tableau [1..] d'Entiers, omega : Tableau[1..m] d'Arête, 
+    length, x, y, t, s : Entier, poids, pmin : réels, arete, arete_min : Arête
+    Début
+    T <- [Q]
+    length <- n
+    TantQue y < length  #Continue tant que tous les points n'ont pas été ajouté à la liste T
+        Début
+        Pour arete dans LA
+            Début
+            x, y, poids <- arete
+            Si (estDans(T, x) et non(estDans(T, y))) ou (non(estDans(T, x)) et estDans(T, y))  #On ajoute toutes les arêtes accessibles à partir d'un seul point du tas à omega (file de priorité)
+                Début
+                AjouterFile(omega, (poids, x, y))  
+                FinSi
+            FinPour
+        pmin, x, y <- Défiler(omega)  #On récupère la première arête de la file (celle de poids minimal)
+        arete_min <- (pmin, x, y)
+        p, t, s <- arete_min
+        Si (non(estDans(T, t)))  #On ajoute à T le sommet de l'arête minimale qui n'était pas déjà dans T puis on ajoute l'arête à l'arbre couvrant de poids minimal
+            Début
+            Ajouter(T, t)
+            Ajouter(ACM, (t, s, p))
+            FinSi
+        Si (non(estDans(T, s)))
+            Début
+            Ajouter(T, s)
+            Ajouter(ACM, (t, s, p))
+            FinSi
+        FinTantQue
+    renvoyer ACM  #On renvoie l'arbre
+    Fin
+
+
+La fonction Longueur renvoie la longueur de la liste donnée en argument
+
+Fonction ParcoursPrefixe(ACM : Tableau[1..] d'Arête, D : Tableau[1..n] de Tableau[1..n] de réels)
+    var circuit : Tableau[1..n+1] de Points, x, y, index : Entier, poids, longueurCircuit : réel, arete : Arête
+    Début
+    Pour arete dans ACM  #On parcourt toutes les arêtes de l'arbre
+        Début
+        x, y, poids <- arete
+        Si (non(estDans(circuit, x)))  #Si on croise un nouveau sommet entrant (l'arête est de la forme x--y), on l'ajoute à la fin du circuit
+            Début
+            Ajouter(circuit, x)
+            FinSi
+        index <- Index(circuit, x)
+        Si (non(estDans(circuit, y)))  #Si on croise un nouveau sommet sortant, on l'ajoute à la fin du circuit si il s'agit du dernier sommet du circuit ou au tout début sinon.
+            Début
+            Si index == (Longueur(circuit))
+                Début
+               Ajouter(circuit, y)
+                FinSi
+            Sinon
+                Début
+                Insérer(circuit, y, 1)
+                FinSinon
+            FinSi
+        FinPour
+    x <- circuit[1]
+    y <- circuit[Longueur(circuit)]
+    Ajouter(circuit, circuit[1])  #On ajoute l'arête reliant le premier et le dernier sommet du circuit
+
+    longueurCircuit <- 0  #On calcule le poids du circuit
+    Pour i allant de 1 à n:
+        Début
+        longueurCircuit <- longueurCircuit + D[circuit[i]][circuit[i+1]]
+        FinPour
+    renvoyer [longueurCircuit, circuit]  #On renvoie la longueur du circuit et le circuit en lui-même
+    Fin
+
+La fonction pointListEnSommets renvoie une liste de sommets à partir d'une liste de points
+La fonction listeEnLA renvoie une liste d'arêtes à partir d'une liste de sommets et d'une matrice de distances
+
+Fonction PvcPrim(pointList : Tableau[1..n] de Points, D : Tableau[1..n] de Tableau[1..n] de réels)
+    var S : Tableau[1..n] d'Entiers, l : Tableau[1..] d'Arête, ACM : Tableau[1..] d'Arête
+    Début
+    S <- pointListEnSommets(pointList)  #On convertit la liste de point en liste de sommets 
+    l <- listeEnLA(S, D)  #On convertit la matrice de distance en liste d'arêtes
+    ACM <- Algo_Prim(S, l, 1)  #On récupère l'arbre résultant de l'algorithme de Prim
+    renvoyer ParcoursPrefixe(ACM, D)  #On renvoie le résultat du parcours préfixe
+    Fin
