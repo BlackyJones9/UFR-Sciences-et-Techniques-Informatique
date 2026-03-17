@@ -1,7 +1,0 @@
-Notice d'Utilisation : 
-
-1) Lancer le fichier main.py sous Pyzo
-2) Entrer la direction vers un fichier valide ou none pour des points aléatoires
-2.5) Si none alors il faudra entrer un nombre de points
-3) Choisir un nombre d'essais 
-4) Le / Les résultats seront affichés pour chaques algorithmes
