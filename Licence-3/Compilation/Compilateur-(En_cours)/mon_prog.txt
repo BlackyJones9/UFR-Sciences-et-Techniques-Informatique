@@ -1,0 +1,5 @@
+\begin{algo}{first}{}
+    \RETURN{5}
+\end{algo}
+
+\CALL{first}{}

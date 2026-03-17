@@ -1,0 +1,128 @@
+	const ax,main
+	jmp ax
+:puissance
+	push bp
+	cp bp,sp
+	push ax
+	push bx
+	push cx
+	push dx
+	const ax,1
+	push ax
+	cp ax,bp
+	const bx,8
+	sub ax,bx
+	pop bx
+	storew bx,ax
+:while_1
+	cp ax,bp
+	const bx,8
+	sub ax,bx
+	loadw bx,ax
+	push bx
+	const ax,9
+	push ax
+	pop ax
+	pop bx
+	const cx,true_2
+	sless bx,ax
+	jmpc cx
+	const ax,0
+	push ax
+	const cx,false_2
+	jmp cx
+:true_2
+	const ax,1
+	push ax
+:false_2
+	const cx,end_while_1
+	pop ax
+	const bx,0
+	cmp ax,bx
+	jmpc cx
+	cp ax,bp
+	const bx,8
+	sub ax,bx
+	loadw bx,ax
+	push bx
+	cp ax,bp
+	const bx,6
+	sub ax,bx
+	loadw bx,ax
+	push bx
+	pop ax
+	pop bx
+	mul bx,ax
+	push bx
+	cp ax,bp
+	const bx,8
+	sub ax,bx
+	pop bx
+	storew bx,ax
+	const cx,while_1
+	jmp cx
+:end_while_1
+	cp ax,bp
+	const bx,8
+	sub ax,bx
+	loadw bx,ax
+	push bx
+	cp ax,bp
+	const bx,10
+	sub ax,bx
+	pop bx
+	storew bx,ax
+	pop dx
+	pop cx
+	pop bx
+	pop ax
+	pop bp
+	ret
+:test
+	push bp
+	cp bp,sp
+	push ax
+	push bx
+	push cx
+	push dx
+	const ax,0
+	push ax
+	push ax
+	const ax,2
+	push ax
+	const ax,3
+	push ax
+	const ax,puissance
+	call ax
+	pop ax
+	pop ax
+	pop ax
+	cp ax,bp
+	const bx,6
+	sub ax,bx
+	pop bx
+	storew bx,ax
+	pop dx
+	pop cx
+	pop bx
+	pop ax
+	pop bp
+	ret
+:main
+	const bp,stack
+	const sp,stack
+	const ax,2
+	sub sp,ax
+	const ax,0
+	push ax
+	const ax,2
+	push ax
+	const ax,test
+	call ax
+	pop ax
+	cp ax,sp
+	callprintfd ax
+	pop ax
+	end
+:stack
+@int 0

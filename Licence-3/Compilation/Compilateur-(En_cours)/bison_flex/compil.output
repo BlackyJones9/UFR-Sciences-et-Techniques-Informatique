@@ -1,0 +1,2153 @@
+Grammaire
+
+    0 $accept: PROG $end
+
+    1 PROG: ALGO_LIST E_CALL
+    2     | ε
+
+    3 ALGO_LIST: ALGO_LIST ALGO
+    4          | ALGO
+
+    5 $@1: ε
+
+    6 E_CALL: $@1 CALL_INIT '{' LVALUE '}'
+
+    7 EXPR_CALL: CALL_INIT '{' LVALUE '}'
+
+    8 CALL_INIT: CALL '{' ID '}'
+
+    9 LVALUE: VALUE_LIST
+   10       | ε
+
+   11 VALUE_LIST: VALUE_LIST ',' VALUE
+   12           | VALUE
+
+   13 VALUE: LEXPR
+
+   14 ALGO_NAME_INIT: '{' ID '}'
+
+   15 ALGO: B_ALGO ALGO_NAME_INIT PARAM_BLOCK LINSTR_BLOCK E_ALGO
+
+   16 PARAM_BLOCK: '{' PARAM_LIST '}'
+
+   17 PARAM_LIST: LPARAM
+   18           | ε
+
+   19 LPARAM: LPARAM ',' PARAM
+   20       | PARAM
+
+   21 PARAM: ID
+
+   22 LEXPR: LEXPR EXPR
+   23      | EXPR
+
+   24 LINSTR_BLOCK: LINSTR
+   25             | ε
+
+   26 LINSTR: LINSTR INSTR
+   27       | INSTR
+
+   28 TAG_INIT: ε
+
+   29 INSTR: RET '{' LEXPR '}'
+   30      | SET '{' ID '}' '{' LEXPR '}'
+
+   31 $@2: ε
+
+   32 $@3: ε
+
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT '{' LEXPR '}' '{' LEXPR '}' $@3 LINSTR OD
+
+   34 $@4: ε
+
+   35 $@5: ε
+
+   36 INSTR: WHILE TAG_INIT $@4 '{' LEXPR '}' $@5 LINSTR OD
+
+   37 $@6: ε
+
+   38 $@7: ε
+
+   39 INSTR: IF TAG_INIT '{' LEXPR '}' $@6 LINSTR $@7 IF_STMT
+
+   40 IF_STMT: FI
+   41        | ELSE LINSTR FI
+
+   42 EXPR: EXPR_CALL
+
+   43 $@8: ε
+
+   44 EXPR: EXPR '+' $@8 EXPR
+
+   45 $@9: ε
+
+   46 EXPR: EXPR '-' $@9 EXPR
+
+   47 $@10: ε
+
+   48 EXPR: EXPR '*' $@10 EXPR
+
+   49 $@11: ε
+
+   50 EXPR: EXPR '/' $@11 EXPR
+   51     | '(' EXPR ')'
+   52     | NUM
+   53     | ID
+   54     | TRUE
+   55     | FALSE
+
+   56 $@12: ε
+
+   57 EXPR: EXPR '<' $@12 EXPR
+
+   58 $@13: ε
+
+   59 EXPR: EXPR '>' $@13 EXPR
+
+   60 $@14: ε
+
+   61 EXPR: EXPR LE $@14 EXPR
+
+   62 $@15: ε
+
+   63 EXPR: EXPR GE $@15 EXPR
+
+   64 $@16: ε
+
+   65 EXPR: EXPR '=' $@16 EXPR
+
+   66 $@17: ε
+
+   67 EXPR: EXPR DIFF $@17 EXPR
+
+   68 $@18: ε
+
+   69 EXPR: EXPR AND $@18 EXPR
+
+   70 $@19: ε
+
+   71 EXPR: EXPR OR $@19 EXPR
+
+   72 $@20: ε
+
+   73 EXPR: EXPR XOR $@20 EXPR
+   74     | NOT EXPR
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+    $end (0) 0
+    '(' (40) 51
+    ')' (41) 51
+    '*' (42) 48
+    '+' (43) 44
+    ',' (44) 11 19
+    '-' (45) 46
+    '/' (47) 50
+    '<' (60) 57
+    '=' (61) 65
+    '>' (62) 59
+    '{' (123) 6 7 8 14 16 29 30 33 36 39
+    '}' (125) 6 7 8 14 16 29 30 33 36 39
+    error (256)
+    NUM <integer> (258) 52
+    LE (259) 61
+    GE (260) 63
+    DIFF (261) 67
+    TRUE (262) 54
+    FALSE (263) 55
+    AND (264) 69
+    OR (265) 71
+    XOR (266) 73
+    NOT (267) 74
+    B_ALGO (268) 15
+    E_ALGO (269) 15
+    ID <string> (270) 8 14 21 30 33 53
+    RET (271) 29
+    SET (272) 30
+    FOR (273) 33
+    WHILE (274) 36
+    CALL (275) 8
+    IF (276) 39
+    ELSE (277) 41
+    FI (278) 40 41
+    OD (279) 33 36
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+    $accept (37)
+        à gauche: 0
+    PROG (38)
+        à gauche: 1 2
+        à droite: 0
+    ALGO_LIST (39)
+        à gauche: 3 4
+        à droite: 1 3
+    E_CALL (40)
+        à gauche: 6
+        à droite: 1
+    $@1 (41)
+        à gauche: 5
+        à droite: 6
+    EXPR_CALL <t> (42)
+        à gauche: 7
+        à droite: 42
+    CALL_INIT <call> (43)
+        à gauche: 8
+        à droite: 6 7
+    LVALUE (44)
+        à gauche: 9 10
+        à droite: 6 7
+    VALUE_LIST (45)
+        à gauche: 11 12
+        à droite: 9 11
+    VALUE (46)
+        à gauche: 13
+        à droite: 11 12
+    ALGO_NAME_INIT (47)
+        à gauche: 14
+        à droite: 15
+    ALGO (48)
+        à gauche: 15
+        à droite: 3 4
+    PARAM_BLOCK (49)
+        à gauche: 16
+        à droite: 15
+    PARAM_LIST (50)
+        à gauche: 17 18
+        à droite: 16
+    LPARAM (51)
+        à gauche: 19 20
+        à droite: 17 19
+    PARAM <string> (52)
+        à gauche: 21
+        à droite: 19 20
+    LEXPR <t> (53)
+        à gauche: 22 23
+        à droite: 13 22 29 30 33 36 39
+    LINSTR_BLOCK (54)
+        à gauche: 24 25
+        à droite: 15
+    LINSTR (55)
+        à gauche: 26 27
+        à droite: 24 26 33 36 39 41
+    TAG_INIT <integer> (56)
+        à gauche: 28
+        à droite: 33 36 39
+    INSTR (57)
+        à gauche: 29 30 33 36 39
+        à droite: 26 27
+    $@2 (58)
+        à gauche: 31
+        à droite: 33
+    $@3 (59)
+        à gauche: 32
+        à droite: 33
+    $@4 (60)
+        à gauche: 34
+        à droite: 36
+    $@5 (61)
+        à gauche: 35
+        à droite: 36
+    $@6 (62)
+        à gauche: 37
+        à droite: 39
+    $@7 (63)
+        à gauche: 38
+        à droite: 39
+    IF_STMT (64)
+        à gauche: 40 41
+        à droite: 39
+    EXPR <t> (65)
+        à gauche: 42 44 46 48 50 51 52 53 54 55 57 59 61 63 65 67 69 71 73 74
+        à droite: 22 23 44 46 48 50 51 57 59 61 63 65 67 69 71 73 74
+    $@8 (66)
+        à gauche: 43
+        à droite: 44
+    $@9 (67)
+        à gauche: 45
+        à droite: 46
+    $@10 (68)
+        à gauche: 47
+        à droite: 48
+    $@11 (69)
+        à gauche: 49
+        à droite: 50
+    $@12 (70)
+        à gauche: 56
+        à droite: 57
+    $@13 (71)
+        à gauche: 58
+        à droite: 59
+    $@14 (72)
+        à gauche: 60
+        à droite: 61
+    $@15 (73)
+        à gauche: 62
+        à droite: 63
+    $@16 (74)
+        à gauche: 64
+        à droite: 65
+    $@17 (75)
+        à gauche: 66
+        à droite: 67
+    $@18 (76)
+        à gauche: 68
+        à droite: 69
+    $@19 (77)
+        à gauche: 70
+        à droite: 71
+    $@20 (78)
+        à gauche: 72
+        à droite: 73
+
+
+État 0
+
+    0 $accept: • PROG $end
+
+    B_ALGO  décalage et aller à l'état 1
+
+    $défaut  réduction par utilisation de la règle 2 (PROG)
+
+    PROG       aller à l'état 2
+    ALGO_LIST  aller à l'état 3
+    ALGO       aller à l'état 4
+
+
+État 1
+
+   15 ALGO: B_ALGO • ALGO_NAME_INIT PARAM_BLOCK LINSTR_BLOCK E_ALGO
+
+    '{'  décalage et aller à l'état 5
+
+    ALGO_NAME_INIT  aller à l'état 6
+
+
+État 2
+
+    0 $accept: PROG • $end
+
+    $end  décalage et aller à l'état 7
+
+
+État 3
+
+    1 PROG: ALGO_LIST • E_CALL
+    3 ALGO_LIST: ALGO_LIST • ALGO
+
+    B_ALGO  décalage et aller à l'état 1
+
+    $défaut  réduction par utilisation de la règle 5 ($@1)
+
+    E_CALL  aller à l'état 8
+    $@1     aller à l'état 9
+    ALGO    aller à l'état 10
+
+
+État 4
+
+    4 ALGO_LIST: ALGO •
+
+    $défaut  réduction par utilisation de la règle 4 (ALGO_LIST)
+
+
+État 5
+
+   14 ALGO_NAME_INIT: '{' • ID '}'
+
+    ID  décalage et aller à l'état 11
+
+
+État 6
+
+   15 ALGO: B_ALGO ALGO_NAME_INIT • PARAM_BLOCK LINSTR_BLOCK E_ALGO
+
+    '{'  décalage et aller à l'état 12
+
+    PARAM_BLOCK  aller à l'état 13
+
+
+État 7
+
+    0 $accept: PROG $end •
+
+    $défaut  accepter
+
+
+État 8
+
+    1 PROG: ALGO_LIST E_CALL •
+
+    $défaut  réduction par utilisation de la règle 1 (PROG)
+
+
+État 9
+
+    6 E_CALL: $@1 • CALL_INIT '{' LVALUE '}'
+
+    CALL  décalage et aller à l'état 14
+
+    CALL_INIT  aller à l'état 15
+
+
+État 10
+
+    3 ALGO_LIST: ALGO_LIST ALGO •
+
+    $défaut  réduction par utilisation de la règle 3 (ALGO_LIST)
+
+
+État 11
+
+   14 ALGO_NAME_INIT: '{' ID • '}'
+
+    '}'  décalage et aller à l'état 16
+
+
+État 12
+
+   16 PARAM_BLOCK: '{' • PARAM_LIST '}'
+
+    ID  décalage et aller à l'état 17
+
+    $défaut  réduction par utilisation de la règle 18 (PARAM_LIST)
+
+    PARAM_LIST  aller à l'état 18
+    LPARAM      aller à l'état 19
+    PARAM       aller à l'état 20
+
+
+État 13
+
+   15 ALGO: B_ALGO ALGO_NAME_INIT PARAM_BLOCK • LINSTR_BLOCK E_ALGO
+
+    RET    décalage et aller à l'état 21
+    SET    décalage et aller à l'état 22
+    FOR    décalage et aller à l'état 23
+    WHILE  décalage et aller à l'état 24
+    IF     décalage et aller à l'état 25
+
+    $défaut  réduction par utilisation de la règle 25 (LINSTR_BLOCK)
+
+    LINSTR_BLOCK  aller à l'état 26
+    LINSTR        aller à l'état 27
+    INSTR         aller à l'état 28
+
+
+État 14
+
+    8 CALL_INIT: CALL • '{' ID '}'
+
+    '{'  décalage et aller à l'état 29
+
+
+État 15
+
+    6 E_CALL: $@1 CALL_INIT • '{' LVALUE '}'
+
+    '{'  décalage et aller à l'état 30
+
+
+État 16
+
+   14 ALGO_NAME_INIT: '{' ID '}' •
+
+    $défaut  réduction par utilisation de la règle 14 (ALGO_NAME_INIT)
+
+
+État 17
+
+   21 PARAM: ID •
+
+    $défaut  réduction par utilisation de la règle 21 (PARAM)
+
+
+État 18
+
+   16 PARAM_BLOCK: '{' PARAM_LIST • '}'
+
+    '}'  décalage et aller à l'état 31
+
+
+État 19
+
+   17 PARAM_LIST: LPARAM •
+   19 LPARAM: LPARAM • ',' PARAM
+
+    ','  décalage et aller à l'état 32
+
+    $défaut  réduction par utilisation de la règle 17 (PARAM_LIST)
+
+
+État 20
+
+   20 LPARAM: PARAM •
+
+    $défaut  réduction par utilisation de la règle 20 (LPARAM)
+
+
+État 21
+
+   29 INSTR: RET • '{' LEXPR '}'
+
+    '{'  décalage et aller à l'état 33
+
+
+État 22
+
+   30 INSTR: SET • '{' ID '}' '{' LEXPR '}'
+
+    '{'  décalage et aller à l'état 34
+
+
+État 23
+
+   33 INSTR: FOR • '{' ID '}' $@2 TAG_INIT '{' LEXPR '}' '{' LEXPR '}' $@3 LINSTR OD
+
+    '{'  décalage et aller à l'état 35
+
+
+État 24
+
+   36 INSTR: WHILE • TAG_INIT $@4 '{' LEXPR '}' $@5 LINSTR OD
+
+    $défaut  réduction par utilisation de la règle 28 (TAG_INIT)
+
+    TAG_INIT  aller à l'état 36
+
+
+État 25
+
+   39 INSTR: IF • TAG_INIT '{' LEXPR '}' $@6 LINSTR $@7 IF_STMT
+
+    $défaut  réduction par utilisation de la règle 28 (TAG_INIT)
+
+    TAG_INIT  aller à l'état 37
+
+
+État 26
+
+   15 ALGO: B_ALGO ALGO_NAME_INIT PARAM_BLOCK LINSTR_BLOCK • E_ALGO
+
+    E_ALGO  décalage et aller à l'état 38
+
+
+État 27
+
+   24 LINSTR_BLOCK: LINSTR •
+   26 LINSTR: LINSTR • INSTR
+
+    RET    décalage et aller à l'état 21
+    SET    décalage et aller à l'état 22
+    FOR    décalage et aller à l'état 23
+    WHILE  décalage et aller à l'état 24
+    IF     décalage et aller à l'état 25
+
+    $défaut  réduction par utilisation de la règle 24 (LINSTR_BLOCK)
+
+    INSTR  aller à l'état 39
+
+
+État 28
+
+   27 LINSTR: INSTR •
+
+    $défaut  réduction par utilisation de la règle 27 (LINSTR)
+
+
+État 29
+
+    8 CALL_INIT: CALL '{' • ID '}'
+
+    ID  décalage et aller à l'état 40
+
+
+État 30
+
+    6 E_CALL: $@1 CALL_INIT '{' • LVALUE '}'
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    $défaut  réduction par utilisation de la règle 10 (LVALUE)
+
+    EXPR_CALL   aller à l'état 47
+    CALL_INIT   aller à l'état 48
+    LVALUE      aller à l'état 49
+    VALUE_LIST  aller à l'état 50
+    VALUE       aller à l'état 51
+    LEXPR       aller à l'état 52
+    EXPR        aller à l'état 53
+
+
+État 31
+
+   16 PARAM_BLOCK: '{' PARAM_LIST '}' •
+
+    $défaut  réduction par utilisation de la règle 16 (PARAM_BLOCK)
+
+
+État 32
+
+   19 LPARAM: LPARAM ',' • PARAM
+
+    ID  décalage et aller à l'état 17
+
+    PARAM  aller à l'état 54
+
+
+État 33
+
+   29 INSTR: RET '{' • LEXPR '}'
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    LEXPR      aller à l'état 55
+    EXPR       aller à l'état 53
+
+
+État 34
+
+   30 INSTR: SET '{' • ID '}' '{' LEXPR '}'
+
+    ID  décalage et aller à l'état 56
+
+
+État 35
+
+   33 INSTR: FOR '{' • ID '}' $@2 TAG_INIT '{' LEXPR '}' '{' LEXPR '}' $@3 LINSTR OD
+
+    ID  décalage et aller à l'état 57
+
+
+État 36
+
+   36 INSTR: WHILE TAG_INIT • $@4 '{' LEXPR '}' $@5 LINSTR OD
+
+    $défaut  réduction par utilisation de la règle 34 ($@4)
+
+    $@4  aller à l'état 58
+
+
+État 37
+
+   39 INSTR: IF TAG_INIT • '{' LEXPR '}' $@6 LINSTR $@7 IF_STMT
+
+    '{'  décalage et aller à l'état 59
+
+
+État 38
+
+   15 ALGO: B_ALGO ALGO_NAME_INIT PARAM_BLOCK LINSTR_BLOCK E_ALGO •
+
+    $défaut  réduction par utilisation de la règle 15 (ALGO)
+
+
+État 39
+
+   26 LINSTR: LINSTR INSTR •
+
+    $défaut  réduction par utilisation de la règle 26 (LINSTR)
+
+
+État 40
+
+    8 CALL_INIT: CALL '{' ID • '}'
+
+    '}'  décalage et aller à l'état 60
+
+
+État 41
+
+   52 EXPR: NUM •
+
+    $défaut  réduction par utilisation de la règle 52 (EXPR)
+
+
+État 42
+
+   54 EXPR: TRUE •
+
+    $défaut  réduction par utilisation de la règle 54 (EXPR)
+
+
+État 43
+
+   55 EXPR: FALSE •
+
+    $défaut  réduction par utilisation de la règle 55 (EXPR)
+
+
+État 44
+
+   74 EXPR: NOT • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 61
+
+
+État 45
+
+   53 EXPR: ID •
+
+    $défaut  réduction par utilisation de la règle 53 (EXPR)
+
+
+État 46
+
+   51 EXPR: '(' • EXPR ')'
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 62
+
+
+État 47
+
+   42 EXPR: EXPR_CALL •
+
+    $défaut  réduction par utilisation de la règle 42 (EXPR)
+
+
+État 48
+
+    7 EXPR_CALL: CALL_INIT • '{' LVALUE '}'
+
+    '{'  décalage et aller à l'état 63
+
+
+État 49
+
+    6 E_CALL: $@1 CALL_INIT '{' LVALUE • '}'
+
+    '}'  décalage et aller à l'état 64
+
+
+État 50
+
+    9 LVALUE: VALUE_LIST •
+   11 VALUE_LIST: VALUE_LIST • ',' VALUE
+
+    ','  décalage et aller à l'état 65
+
+    $défaut  réduction par utilisation de la règle 9 (LVALUE)
+
+
+État 51
+
+   12 VALUE_LIST: VALUE •
+
+    $défaut  réduction par utilisation de la règle 12 (VALUE_LIST)
+
+
+État 52
+
+   13 VALUE: LEXPR •
+   22 LEXPR: LEXPR • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    $défaut  réduction par utilisation de la règle 13 (VALUE)
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 66
+
+
+État 53
+
+   23 LEXPR: EXPR •
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    LE    décalage et aller à l'état 67
+    GE    décalage et aller à l'état 68
+    DIFF  décalage et aller à l'état 69
+    AND   décalage et aller à l'état 70
+    OR    décalage et aller à l'état 71
+    XOR   décalage et aller à l'état 72
+    '<'   décalage et aller à l'état 73
+    '>'   décalage et aller à l'état 74
+    '='   décalage et aller à l'état 75
+    '+'   décalage et aller à l'état 76
+    '-'   décalage et aller à l'état 77
+    '*'   décalage et aller à l'état 78
+    '/'   décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 23 (LEXPR)
+
+
+État 54
+
+   19 LPARAM: LPARAM ',' PARAM •
+
+    $défaut  réduction par utilisation de la règle 19 (LPARAM)
+
+
+État 55
+
+   22 LEXPR: LEXPR • EXPR
+   29 INSTR: RET '{' LEXPR • '}'
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+    '}'    décalage et aller à l'état 80
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 66
+
+
+État 56
+
+   30 INSTR: SET '{' ID • '}' '{' LEXPR '}'
+
+    '}'  décalage et aller à l'état 81
+
+
+État 57
+
+   33 INSTR: FOR '{' ID • '}' $@2 TAG_INIT '{' LEXPR '}' '{' LEXPR '}' $@3 LINSTR OD
+
+    '}'  décalage et aller à l'état 82
+
+
+État 58
+
+   36 INSTR: WHILE TAG_INIT $@4 • '{' LEXPR '}' $@5 LINSTR OD
+
+    '{'  décalage et aller à l'état 83
+
+
+État 59
+
+   39 INSTR: IF TAG_INIT '{' • LEXPR '}' $@6 LINSTR $@7 IF_STMT
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    LEXPR      aller à l'état 84
+    EXPR       aller à l'état 53
+
+
+État 60
+
+    8 CALL_INIT: CALL '{' ID '}' •
+
+    $défaut  réduction par utilisation de la règle 8 (CALL_INIT)
+
+
+État 61
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+   74     | NOT EXPR •
+
+    LE    décalage et aller à l'état 67
+    GE    décalage et aller à l'état 68
+    DIFF  décalage et aller à l'état 69
+    '<'   décalage et aller à l'état 73
+    '>'   décalage et aller à l'état 74
+    '='   décalage et aller à l'état 75
+    '+'   décalage et aller à l'état 76
+    '-'   décalage et aller à l'état 77
+    '*'   décalage et aller à l'état 78
+    '/'   décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 74 (EXPR)
+
+
+État 62
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   51     | '(' EXPR • ')'
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    LE    décalage et aller à l'état 67
+    GE    décalage et aller à l'état 68
+    DIFF  décalage et aller à l'état 69
+    AND   décalage et aller à l'état 70
+    OR    décalage et aller à l'état 71
+    XOR   décalage et aller à l'état 72
+    '<'   décalage et aller à l'état 73
+    '>'   décalage et aller à l'état 74
+    '='   décalage et aller à l'état 75
+    '+'   décalage et aller à l'état 76
+    '-'   décalage et aller à l'état 77
+    '*'   décalage et aller à l'état 78
+    '/'   décalage et aller à l'état 79
+    ')'   décalage et aller à l'état 85
+
+
+État 63
+
+    7 EXPR_CALL: CALL_INIT '{' • LVALUE '}'
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    $défaut  réduction par utilisation de la règle 10 (LVALUE)
+
+    EXPR_CALL   aller à l'état 47
+    CALL_INIT   aller à l'état 48
+    LVALUE      aller à l'état 86
+    VALUE_LIST  aller à l'état 50
+    VALUE       aller à l'état 51
+    LEXPR       aller à l'état 52
+    EXPR        aller à l'état 53
+
+
+État 64
+
+    6 E_CALL: $@1 CALL_INIT '{' LVALUE '}' •
+
+    $défaut  réduction par utilisation de la règle 6 (E_CALL)
+
+
+État 65
+
+   11 VALUE_LIST: VALUE_LIST ',' • VALUE
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    VALUE      aller à l'état 87
+    LEXPR      aller à l'état 52
+    EXPR       aller à l'état 53
+
+
+État 66
+
+   22 LEXPR: LEXPR EXPR •
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    LE    décalage et aller à l'état 67
+    GE    décalage et aller à l'état 68
+    DIFF  décalage et aller à l'état 69
+    AND   décalage et aller à l'état 70
+    OR    décalage et aller à l'état 71
+    XOR   décalage et aller à l'état 72
+    '<'   décalage et aller à l'état 73
+    '>'   décalage et aller à l'état 74
+    '='   décalage et aller à l'état 75
+    '+'   décalage et aller à l'état 76
+    '-'   décalage et aller à l'état 77
+    '*'   décalage et aller à l'état 78
+    '/'   décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 22 (LEXPR)
+
+
+État 67
+
+   61 EXPR: EXPR LE • $@14 EXPR
+
+    $défaut  réduction par utilisation de la règle 60 ($@14)
+
+    $@14  aller à l'état 88
+
+
+État 68
+
+   63 EXPR: EXPR GE • $@15 EXPR
+
+    $défaut  réduction par utilisation de la règle 62 ($@15)
+
+    $@15  aller à l'état 89
+
+
+État 69
+
+   67 EXPR: EXPR DIFF • $@17 EXPR
+
+    $défaut  réduction par utilisation de la règle 66 ($@17)
+
+    $@17  aller à l'état 90
+
+
+État 70
+
+   69 EXPR: EXPR AND • $@18 EXPR
+
+    $défaut  réduction par utilisation de la règle 68 ($@18)
+
+    $@18  aller à l'état 91
+
+
+État 71
+
+   71 EXPR: EXPR OR • $@19 EXPR
+
+    $défaut  réduction par utilisation de la règle 70 ($@19)
+
+    $@19  aller à l'état 92
+
+
+État 72
+
+   73 EXPR: EXPR XOR • $@20 EXPR
+
+    $défaut  réduction par utilisation de la règle 72 ($@20)
+
+    $@20  aller à l'état 93
+
+
+État 73
+
+   57 EXPR: EXPR '<' • $@12 EXPR
+
+    $défaut  réduction par utilisation de la règle 56 ($@12)
+
+    $@12  aller à l'état 94
+
+
+État 74
+
+   59 EXPR: EXPR '>' • $@13 EXPR
+
+    $défaut  réduction par utilisation de la règle 58 ($@13)
+
+    $@13  aller à l'état 95
+
+
+État 75
+
+   65 EXPR: EXPR '=' • $@16 EXPR
+
+    $défaut  réduction par utilisation de la règle 64 ($@16)
+
+    $@16  aller à l'état 96
+
+
+État 76
+
+   44 EXPR: EXPR '+' • $@8 EXPR
+
+    $défaut  réduction par utilisation de la règle 43 ($@8)
+
+    $@8  aller à l'état 97
+
+
+État 77
+
+   46 EXPR: EXPR '-' • $@9 EXPR
+
+    $défaut  réduction par utilisation de la règle 45 ($@9)
+
+    $@9  aller à l'état 98
+
+
+État 78
+
+   48 EXPR: EXPR '*' • $@10 EXPR
+
+    $défaut  réduction par utilisation de la règle 47 ($@10)
+
+    $@10  aller à l'état 99
+
+
+État 79
+
+   50 EXPR: EXPR '/' • $@11 EXPR
+
+    $défaut  réduction par utilisation de la règle 49 ($@11)
+
+    $@11  aller à l'état 100
+
+
+État 80
+
+   29 INSTR: RET '{' LEXPR '}' •
+
+    $défaut  réduction par utilisation de la règle 29 (INSTR)
+
+
+État 81
+
+   30 INSTR: SET '{' ID '}' • '{' LEXPR '}'
+
+    '{'  décalage et aller à l'état 101
+
+
+État 82
+
+   33 INSTR: FOR '{' ID '}' • $@2 TAG_INIT '{' LEXPR '}' '{' LEXPR '}' $@3 LINSTR OD
+
+    $défaut  réduction par utilisation de la règle 31 ($@2)
+
+    $@2  aller à l'état 102
+
+
+État 83
+
+   36 INSTR: WHILE TAG_INIT $@4 '{' • LEXPR '}' $@5 LINSTR OD
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    LEXPR      aller à l'état 103
+    EXPR       aller à l'état 53
+
+
+État 84
+
+   22 LEXPR: LEXPR • EXPR
+   39 INSTR: IF TAG_INIT '{' LEXPR • '}' $@6 LINSTR $@7 IF_STMT
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+    '}'    décalage et aller à l'état 104
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 66
+
+
+État 85
+
+   51 EXPR: '(' EXPR ')' •
+
+    $défaut  réduction par utilisation de la règle 51 (EXPR)
+
+
+État 86
+
+    7 EXPR_CALL: CALL_INIT '{' LVALUE • '}'
+
+    '}'  décalage et aller à l'état 105
+
+
+État 87
+
+   11 VALUE_LIST: VALUE_LIST ',' VALUE •
+
+    $défaut  réduction par utilisation de la règle 11 (VALUE_LIST)
+
+
+État 88
+
+   61 EXPR: EXPR LE $@14 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 106
+
+
+État 89
+
+   63 EXPR: EXPR GE $@15 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 107
+
+
+État 90
+
+   67 EXPR: EXPR DIFF $@17 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 108
+
+
+État 91
+
+   69 EXPR: EXPR AND $@18 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 109
+
+
+État 92
+
+   71 EXPR: EXPR OR $@19 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 110
+
+
+État 93
+
+   73 EXPR: EXPR XOR $@20 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 111
+
+
+État 94
+
+   57 EXPR: EXPR '<' $@12 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 112
+
+
+État 95
+
+   59 EXPR: EXPR '>' $@13 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 113
+
+
+État 96
+
+   65 EXPR: EXPR '=' $@16 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 114
+
+
+État 97
+
+   44 EXPR: EXPR '+' $@8 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 115
+
+
+État 98
+
+   46 EXPR: EXPR '-' $@9 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 116
+
+
+État 99
+
+   48 EXPR: EXPR '*' $@10 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 117
+
+
+État 100
+
+   50 EXPR: EXPR '/' $@11 • EXPR
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 118
+
+
+État 101
+
+   30 INSTR: SET '{' ID '}' '{' • LEXPR '}'
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    LEXPR      aller à l'état 119
+    EXPR       aller à l'état 53
+
+
+État 102
+
+   33 INSTR: FOR '{' ID '}' $@2 • TAG_INIT '{' LEXPR '}' '{' LEXPR '}' $@3 LINSTR OD
+
+    $défaut  réduction par utilisation de la règle 28 (TAG_INIT)
+
+    TAG_INIT  aller à l'état 120
+
+
+État 103
+
+   22 LEXPR: LEXPR • EXPR
+   36 INSTR: WHILE TAG_INIT $@4 '{' LEXPR • '}' $@5 LINSTR OD
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+    '}'    décalage et aller à l'état 121
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 66
+
+
+État 104
+
+   39 INSTR: IF TAG_INIT '{' LEXPR '}' • $@6 LINSTR $@7 IF_STMT
+
+    $défaut  réduction par utilisation de la règle 37 ($@6)
+
+    $@6  aller à l'état 122
+
+
+État 105
+
+    7 EXPR_CALL: CALL_INIT '{' LVALUE '}' •
+
+    $défaut  réduction par utilisation de la règle 7 (EXPR_CALL)
+
+
+État 106
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   61     | EXPR LE $@14 EXPR •
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    '+'  décalage et aller à l'état 76
+    '-'  décalage et aller à l'état 77
+    '*'  décalage et aller à l'état 78
+    '/'  décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 61 (EXPR)
+
+
+État 107
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   63     | EXPR GE $@15 EXPR •
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    '+'  décalage et aller à l'état 76
+    '-'  décalage et aller à l'état 77
+    '*'  décalage et aller à l'état 78
+    '/'  décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 63 (EXPR)
+
+
+État 108
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   67     | EXPR DIFF $@17 EXPR •
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    '+'  décalage et aller à l'état 76
+    '-'  décalage et aller à l'état 77
+    '*'  décalage et aller à l'état 78
+    '/'  décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 67 (EXPR)
+
+
+État 109
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   69     | EXPR AND $@18 EXPR •
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    LE    décalage et aller à l'état 67
+    GE    décalage et aller à l'état 68
+    DIFF  décalage et aller à l'état 69
+    '<'   décalage et aller à l'état 73
+    '>'   décalage et aller à l'état 74
+    '='   décalage et aller à l'état 75
+    '+'   décalage et aller à l'état 76
+    '-'   décalage et aller à l'état 77
+    '*'   décalage et aller à l'état 78
+    '/'   décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 69 (EXPR)
+
+
+État 110
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   71     | EXPR OR $@19 EXPR •
+   73     | EXPR • XOR $@20 EXPR
+
+    LE    décalage et aller à l'état 67
+    GE    décalage et aller à l'état 68
+    DIFF  décalage et aller à l'état 69
+    AND   décalage et aller à l'état 70
+    XOR   décalage et aller à l'état 72
+    '<'   décalage et aller à l'état 73
+    '>'   décalage et aller à l'état 74
+    '='   décalage et aller à l'état 75
+    '+'   décalage et aller à l'état 76
+    '-'   décalage et aller à l'état 77
+    '*'   décalage et aller à l'état 78
+    '/'   décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 71 (EXPR)
+
+
+État 111
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+   73     | EXPR XOR $@20 EXPR •
+
+    LE    décalage et aller à l'état 67
+    GE    décalage et aller à l'état 68
+    DIFF  décalage et aller à l'état 69
+    AND   décalage et aller à l'état 70
+    '<'   décalage et aller à l'état 73
+    '>'   décalage et aller à l'état 74
+    '='   décalage et aller à l'état 75
+    '+'   décalage et aller à l'état 76
+    '-'   décalage et aller à l'état 77
+    '*'   décalage et aller à l'état 78
+    '/'   décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 73 (EXPR)
+
+
+État 112
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   57     | EXPR '<' $@12 EXPR •
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    '+'  décalage et aller à l'état 76
+    '-'  décalage et aller à l'état 77
+    '*'  décalage et aller à l'état 78
+    '/'  décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 57 (EXPR)
+
+
+État 113
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   59     | EXPR '>' $@13 EXPR •
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    '+'  décalage et aller à l'état 76
+    '-'  décalage et aller à l'état 77
+    '*'  décalage et aller à l'état 78
+    '/'  décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 59 (EXPR)
+
+
+État 114
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   65     | EXPR '=' $@16 EXPR •
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    '+'  décalage et aller à l'état 76
+    '-'  décalage et aller à l'état 77
+    '*'  décalage et aller à l'état 78
+    '/'  décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 65 (EXPR)
+
+
+État 115
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   44     | EXPR '+' $@8 EXPR •
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    '*'  décalage et aller à l'état 78
+    '/'  décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 44 (EXPR)
+
+
+État 116
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   46     | EXPR '-' $@9 EXPR •
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    '*'  décalage et aller à l'état 78
+    '/'  décalage et aller à l'état 79
+
+    $défaut  réduction par utilisation de la règle 46 (EXPR)
+
+
+État 117
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   48     | EXPR '*' $@10 EXPR •
+   50     | EXPR • '/' $@11 EXPR
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    $défaut  réduction par utilisation de la règle 48 (EXPR)
+
+
+État 118
+
+   44 EXPR: EXPR • '+' $@8 EXPR
+   46     | EXPR • '-' $@9 EXPR
+   48     | EXPR • '*' $@10 EXPR
+   50     | EXPR • '/' $@11 EXPR
+   50     | EXPR '/' $@11 EXPR •
+   57     | EXPR • '<' $@12 EXPR
+   59     | EXPR • '>' $@13 EXPR
+   61     | EXPR • LE $@14 EXPR
+   63     | EXPR • GE $@15 EXPR
+   65     | EXPR • '=' $@16 EXPR
+   67     | EXPR • DIFF $@17 EXPR
+   69     | EXPR • AND $@18 EXPR
+   71     | EXPR • OR $@19 EXPR
+   73     | EXPR • XOR $@20 EXPR
+
+    $défaut  réduction par utilisation de la règle 50 (EXPR)
+
+
+État 119
+
+   22 LEXPR: LEXPR • EXPR
+   30 INSTR: SET '{' ID '}' '{' LEXPR • '}'
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+    '}'    décalage et aller à l'état 123
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 66
+
+
+État 120
+
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT • '{' LEXPR '}' '{' LEXPR '}' $@3 LINSTR OD
+
+    '{'  décalage et aller à l'état 124
+
+
+État 121
+
+   36 INSTR: WHILE TAG_INIT $@4 '{' LEXPR '}' • $@5 LINSTR OD
+
+    $défaut  réduction par utilisation de la règle 35 ($@5)
+
+    $@5  aller à l'état 125
+
+
+État 122
+
+   39 INSTR: IF TAG_INIT '{' LEXPR '}' $@6 • LINSTR $@7 IF_STMT
+
+    RET    décalage et aller à l'état 21
+    SET    décalage et aller à l'état 22
+    FOR    décalage et aller à l'état 23
+    WHILE  décalage et aller à l'état 24
+    IF     décalage et aller à l'état 25
+
+    LINSTR  aller à l'état 126
+    INSTR   aller à l'état 28
+
+
+État 123
+
+   30 INSTR: SET '{' ID '}' '{' LEXPR '}' •
+
+    $défaut  réduction par utilisation de la règle 30 (INSTR)
+
+
+État 124
+
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT '{' • LEXPR '}' '{' LEXPR '}' $@3 LINSTR OD
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    LEXPR      aller à l'état 127
+    EXPR       aller à l'état 53
+
+
+État 125
+
+   36 INSTR: WHILE TAG_INIT $@4 '{' LEXPR '}' $@5 • LINSTR OD
+
+    RET    décalage et aller à l'état 21
+    SET    décalage et aller à l'état 22
+    FOR    décalage et aller à l'état 23
+    WHILE  décalage et aller à l'état 24
+    IF     décalage et aller à l'état 25
+
+    LINSTR  aller à l'état 128
+    INSTR   aller à l'état 28
+
+
+État 126
+
+   26 LINSTR: LINSTR • INSTR
+   39 INSTR: IF TAG_INIT '{' LEXPR '}' $@6 LINSTR • $@7 IF_STMT
+
+    RET    décalage et aller à l'état 21
+    SET    décalage et aller à l'état 22
+    FOR    décalage et aller à l'état 23
+    WHILE  décalage et aller à l'état 24
+    IF     décalage et aller à l'état 25
+
+    $défaut  réduction par utilisation de la règle 38 ($@7)
+
+    INSTR  aller à l'état 39
+    $@7    aller à l'état 129
+
+
+État 127
+
+   22 LEXPR: LEXPR • EXPR
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT '{' LEXPR • '}' '{' LEXPR '}' $@3 LINSTR OD
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+    '}'    décalage et aller à l'état 130
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 66
+
+
+État 128
+
+   26 LINSTR: LINSTR • INSTR
+   36 INSTR: WHILE TAG_INIT $@4 '{' LEXPR '}' $@5 LINSTR • OD
+
+    RET    décalage et aller à l'état 21
+    SET    décalage et aller à l'état 22
+    FOR    décalage et aller à l'état 23
+    WHILE  décalage et aller à l'état 24
+    IF     décalage et aller à l'état 25
+    OD     décalage et aller à l'état 131
+
+    INSTR  aller à l'état 39
+
+
+État 129
+
+   39 INSTR: IF TAG_INIT '{' LEXPR '}' $@6 LINSTR $@7 • IF_STMT
+
+    ELSE  décalage et aller à l'état 132
+    FI    décalage et aller à l'état 133
+
+    IF_STMT  aller à l'état 134
+
+
+État 130
+
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT '{' LEXPR '}' • '{' LEXPR '}' $@3 LINSTR OD
+
+    '{'  décalage et aller à l'état 135
+
+
+État 131
+
+   36 INSTR: WHILE TAG_INIT $@4 '{' LEXPR '}' $@5 LINSTR OD •
+
+    $défaut  réduction par utilisation de la règle 36 (INSTR)
+
+
+État 132
+
+   41 IF_STMT: ELSE • LINSTR FI
+
+    RET    décalage et aller à l'état 21
+    SET    décalage et aller à l'état 22
+    FOR    décalage et aller à l'état 23
+    WHILE  décalage et aller à l'état 24
+    IF     décalage et aller à l'état 25
+
+    LINSTR  aller à l'état 136
+    INSTR   aller à l'état 28
+
+
+État 133
+
+   40 IF_STMT: FI •
+
+    $défaut  réduction par utilisation de la règle 40 (IF_STMT)
+
+
+État 134
+
+   39 INSTR: IF TAG_INIT '{' LEXPR '}' $@6 LINSTR $@7 IF_STMT •
+
+    $défaut  réduction par utilisation de la règle 39 (INSTR)
+
+
+État 135
+
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT '{' LEXPR '}' '{' • LEXPR '}' $@3 LINSTR OD
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    LEXPR      aller à l'état 137
+    EXPR       aller à l'état 53
+
+
+État 136
+
+   26 LINSTR: LINSTR • INSTR
+   41 IF_STMT: ELSE LINSTR • FI
+
+    RET    décalage et aller à l'état 21
+    SET    décalage et aller à l'état 22
+    FOR    décalage et aller à l'état 23
+    WHILE  décalage et aller à l'état 24
+    IF     décalage et aller à l'état 25
+    FI     décalage et aller à l'état 138
+
+    INSTR  aller à l'état 39
+
+
+État 137
+
+   22 LEXPR: LEXPR • EXPR
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT '{' LEXPR '}' '{' LEXPR • '}' $@3 LINSTR OD
+
+    NUM    décalage et aller à l'état 41
+    TRUE   décalage et aller à l'état 42
+    FALSE  décalage et aller à l'état 43
+    NOT    décalage et aller à l'état 44
+    ID     décalage et aller à l'état 45
+    CALL   décalage et aller à l'état 14
+    '('    décalage et aller à l'état 46
+    '}'    décalage et aller à l'état 139
+
+    EXPR_CALL  aller à l'état 47
+    CALL_INIT  aller à l'état 48
+    EXPR       aller à l'état 66
+
+
+État 138
+
+   41 IF_STMT: ELSE LINSTR FI •
+
+    $défaut  réduction par utilisation de la règle 41 (IF_STMT)
+
+
+État 139
+
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT '{' LEXPR '}' '{' LEXPR '}' • $@3 LINSTR OD
+
+    $défaut  réduction par utilisation de la règle 32 ($@3)
+
+    $@3  aller à l'état 140
+
+
+État 140
+
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT '{' LEXPR '}' '{' LEXPR '}' $@3 • LINSTR OD
+
+    RET    décalage et aller à l'état 21
+    SET    décalage et aller à l'état 22
+    FOR    décalage et aller à l'état 23
+    WHILE  décalage et aller à l'état 24
+    IF     décalage et aller à l'état 25
+
+    LINSTR  aller à l'état 141
+    INSTR   aller à l'état 28
+
+
+État 141
+
+   26 LINSTR: LINSTR • INSTR
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT '{' LEXPR '}' '{' LEXPR '}' $@3 LINSTR • OD
+
+    RET    décalage et aller à l'état 21
+    SET    décalage et aller à l'état 22
+    FOR    décalage et aller à l'état 23
+    WHILE  décalage et aller à l'état 24
+    IF     décalage et aller à l'état 25
+    OD     décalage et aller à l'état 142
+
+    INSTR  aller à l'état 39
+
+
+État 142
+
+   33 INSTR: FOR '{' ID '}' $@2 TAG_INIT '{' LEXPR '}' '{' LEXPR '}' $@3 LINSTR OD •
+
+    $défaut  réduction par utilisation de la règle 33 (INSTR)
