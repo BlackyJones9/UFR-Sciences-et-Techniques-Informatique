@@ -1,0 +1,137 @@
+body {
+    background-color: #EEEEEE;
+    margin: 0px;
+}
+
+p, h1, h2 {
+    font-family: sans-serif;
+    margin: 0px;
+}
+
+.flex {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.flex_column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.msq_sql_succes {
+    padding: 15px 50px 15px 50px;
+    background-color: #63B561;
+    border: solid 1px #478C46;
+    border-radius: 5px;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.msq_sql_echec {
+    padding: 15px 50px 15px 50px;
+    background-color: #E38686;
+    border: solid 1px #873131;
+    border-radius: 5px;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+#container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.block {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 1px 1px 1px black;
+}
+
+#titre_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#titre-page {
+    background-color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 3em;
+    text-align: center;
+    padding: 20px;
+    margin: 15px 50px 15px 50px;
+    width: 92%;
+}
+
+textarea {
+    font-size: 1.5em;
+    overflow-x: auto;
+    resize: none;
+    border: solid 1px black;
+    border-radius: 5px;
+    margin: 5px 0px 20px 0px;
+    padding: 5px;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input input{
+    padding: 10px;
+    margin: 5px 10px 20px 10px;
+    width: 250px;
+    border: solid 1px black;
+    height: 20px;
+    border-radius: 5px;
+}
+
+.input p {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#fixed {
+    position: relative;
+}
+
+.btn_valider {
+    position: absolute;
+    right: 0;
+    background-color: #91D173;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 25px 10px 25px;
+    margin-right: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn_valider:hover {
+    background-color: #478C46;
+}
+
+.btn_retour {
+    background-color: #D78383;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 25px 10px 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn_retour:hover {
+    background-color: #BA4040;
+}

@@ -1,0 +1,366 @@
+body {
+  background-color: #EEEEEE;
+  margin: 0px;
+}
+
+.flex {
+  display: flex;
+}
+
+p, h1, h2 {
+  font-family: sans-serif;
+  margin: 0px;
+}
+
+#filter {
+  width: 30vw;
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+  margin: 25px 0px 25px 0px;
+}
+
+#filtre-container {
+  height: calc(100vh - 150px);
+  width: 100%;
+  margin: 10px 0px 10px 0px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#recherche {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+#recherche h1 {
+  margin-left: 15px;
+  font-size: 2em;
+  text-align: center;
+  margin: 20px;
+}
+
+#recherche form {
+  width: 30vw;
+  position: sticky;
+  top: 0;
+  height: fit-content;
+  overflow-y: auto;
+}
+
+.filtre {
+  width: 98%;
+}
+
+.filtre-title img {
+  height: 20px;
+}
+
+.filtre-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px 10px 20px;
+  margin: 10px 10px 10px 15px;
+  height: 40px;
+  border-top: solid 1px black;
+  border-bottom: solid 1px black;
+  user-select: none;
+  cursor: pointer;
+}
+
+.filter-container-checkbox {
+  position:relative;
+  margin: 0px 0px 10px 15px;
+  overflow-y: auto;
+  max-height: 150px;
+  background-color: #D9D9D9;
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+  border: solid 1px black;
+  transition: max-height 0.5s ease-in-out;
+}
+
+.filter-container-checkbox p {
+  font-size: 1.5em;
+}
+
+.filter-container-checkbox .input-checkbox {
+ width: 20px;
+ height: 20px;
+ margin: 9px 15px 9px 0px;
+ cursor: pointer;
+}
+
+.filter-container-checkbox .input-text {
+  height: 30px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  border: solid 1px black;
+  margin: 9px 15px 9px 0px;
+ }
+
+/*  -- Input Button --  */
+.btn-container-filter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-container-filter input{
+  padding: 5px 50px 5px 50px;
+  font-size: 1.5em;
+  font-weight: bold;
+  background-color: #002B5E;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+/*  -- Filter Animation --  */
+#filter-public {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+#filter-public.active {
+  max-height: 160px;
+}
+
+#filter-auteur {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+#filter-auteur.active {
+  max-height: 180px;
+}
+
+#filter-editeur {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+#filter-editeur.active {
+  max-height: 180px;
+}
+
+#filter-date {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+#filter-date.active {
+  max-height: 180px;
+}
+
+#filter-categorie {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+#filter-categorie.active {
+  max-height: 180px;
+}
+
+#filter-type {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+#filter-type.active {
+  max-height: 180px;
+}
+
+.btn-arrow {
+  transform: rotate(-90deg);
+  transition: rotate 0.3s ease-in-out;
+}
+.btn-arrow.active {
+  transform: rotate(0deg);
+}
+
+/*  -- Resltat Container --  */
+#resultat-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.block {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px black;
+  padding: 20px;
+  margin: 20px;
+  width: fit-content;
+  min-width: 60%;
+}
+
+#recap-container {
+  width: 60%;
+  overflow-x: auto;
+}
+
+#recap_mot_supp {
+  display: flex;
+  justify-content: space-between;
+}
+
+#supp_mot {
+  width: max-content;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 15px 0px 15px 15px;
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+  background-color: #E38686;
+  border: solid 1px #873131;
+  text-align: center;
+}
+
+#supp_mot:hover {
+  background-color: #f15454;
+}
+
+.input_titre {
+  padding: 0px;
+  border: none;
+  background-color: white;
+  font-size: 2em;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: left;
+}
+
+#recap {
+  width: max-content;
+  font-size: 1.2em;
+  background-color: #D9D9D9;
+  margin: 15px 0px 15px 15px;
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+  border: solid 1px black;
+}
+
+#book-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#no-result {
+  font-weight: bold;
+  font-size: 1.2em;
+  width: fit-content;
+  padding: 0px 30px 0px 30px;
+}
+
+.book {
+  width: 40vw;
+}
+
+.book-content {
+  display: flex;
+}
+
+.book-cover {
+  width: 130px;
+  height: 180px;
+}
+
+.book-title {
+  overflow: hidden;
+}
+
+.book-summary {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 20px 0px 20px;
+  align-items: stretch;
+}
+
+.book-summary div:last-child {
+  margin-top: 20px;
+  height: 90px;
+  overflow: hidden;
+}
+
+.dispo-emprunter {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dispo-emprunter div {
+  align-items: center;
+}
+
+.green-circle {
+  width: 15px;
+  height: 15px;
+  margin-right: 10PX;
+  border-radius: 25px;
+  background-color: #39CE5A;
+}
+
+.red-circle {
+  width: 15px;
+  height: 15px;
+  margin-right: 10PX;
+  border-radius: 25px;
+  background-color: #CE3939;
+}
+
+.emprunter-button {
+  background-color: #002B5E;
+  border-radius: 5px;
+  border: none;
+  padding: 5px 10px 5px 10px;
+
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+
+  user-select: none;
+  cursor: pointer;
+}
+
+
+.blocked-emprunter-button {
+  background-color: #314052;
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+  user-select: none;
+}
+
+.blocked-emprunter-button p {
+  color: rgb(129, 129, 129);
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* retour haut */
+
+#retour-haut {
+	z-index : 5;
+	height : 50px;
+	width : 50px;
+	border-radius : 3px;
+	position : fixed;
+	background-color : #D9D9D9;
+	border : solid black 1px;
+	box-shadow : 1px 1px 1px grey;
+	opacity : 0.8;
+	transition : 0.3s ease;
+	right : 30px;
+	bottom : 30px;
+	background-image : url("../assets/fleche2.png");
+	cursor : pointer;
+	background-repeat: no-repeat;
+}
